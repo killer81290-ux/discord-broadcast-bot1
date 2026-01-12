@@ -1,13 +1,12 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const express = require("express");
 
-// ====== Discord Bot ======
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
+    GatewayIntentBits.MessageContent
+  ]
 });
 
 client.once("ready", () => {
@@ -16,13 +15,12 @@ client.once("ready", () => {
 
 client.on("messageCreate", (message) => {
   if (message.author.bot) return;
-
   if (message.content === "!ping") {
     message.reply("🏓 Pong!");
   }
 });
 
-// ====== Web Server (عشان Render) ======
+// Web server for Render
 const app = express();
 app.get("/", (req, res) => {
   res.send("Bot is running 🚀");
@@ -33,5 +31,4 @@ app.listen(PORT, () => {
   console.log(`🌐 Web server running on port ${PORT}`);
 });
 
-// ====== Login ======
 client.login(process.env.TOKEN);
